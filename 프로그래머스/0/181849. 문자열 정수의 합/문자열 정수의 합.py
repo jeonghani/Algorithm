@@ -1,2 +1,2 @@
 def solution(num_str):
-    return sum([int(n) for n in list(num_str)])
+    return sum([int(i) for i in num_str])

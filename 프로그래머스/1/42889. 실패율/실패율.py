@@ -13,4 +13,7 @@ def solution(N, stages):
         failure.append((i, failure_rate))
         players-=player[i]
     failure.sort(key=lambda x:x[1], reverse=True)
-    return [stage for stage, rate in failure]
+    answer = []
+    for i in failure:
+        answer.append(int(i[0]))
+    return answer

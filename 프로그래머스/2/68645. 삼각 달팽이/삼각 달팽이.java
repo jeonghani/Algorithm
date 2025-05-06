@@ -2,36 +2,36 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int n) {
-        // 삼각형 배열을 생성
-        int[][] triangle = new int[n][n];
-        int num = 1; // 채워 넣을 숫자
-        int x = -1, y = 0; // 시작 위치 (첫 방향은 아래이므로 x=-1)
-        int direction = 0; // 방향: 0(아래), 1(오른쪽), 2(위왼쪽)
-        
+        int[][] triangle = new int[n][n]; // 2차원 배열 만들기
+        int x = -1, y = 0, num = 1;
+
+        // 각 단계마다 채우는 수가 줄어들면서 반복
         for (int i = 0; i < n; i++) {
             for (int j = i; j < n; j++) {
-                if (direction == 0) { // 아래
+                if (i % 3 == 0) {      // 아래로 이동
                     x++;
-                } else if (direction == 1) { // 오른쪽
+                } else if (i % 3 == 1) { // 오른쪽 이동
                     y++;
-                } else if (direction == 2) { // 위왼쪽 대각
+                } else if (i % 3 == 2) { // 위 대각선 이동
                     x--;
                     y--;
                 }
                 triangle[x][y] = num++;
             }
-            direction = (direction + 1) % 3; // 방향 변경
         }
-        
-        // 결과를 1차원 배열로 변환
-        List<Integer> result = new ArrayList<>();
+
+        // 결과 담을 배열 크기 미리 계산
+        int size = n * (n + 1) / 2;
+        int[] answer = new int[size];
+        int idx = 0;
+
+        // 삼각형 모양으로만 꺼내기 (i행은 i+1개만 채워져 있음)
         for (int i = 0; i < n; i++) {
             for (int j = 0; j <= i; j++) {
-                result.add(triangle[i][j]);
+                answer[idx++] = triangle[i][j];
             }
         }
 
-        // List -> int[] 변환
-        return result.stream().mapToInt(i -> i).toArray();
+        return answer;
     }
 }

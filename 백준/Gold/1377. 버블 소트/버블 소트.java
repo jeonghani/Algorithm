@@ -2,33 +2,29 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static class Num implements Comparable<Num> {
-        int value, idx;
-        Num(int value, int idx) {
-            this.value = value;
-            this.idx = idx;
-        }
-        public int compareTo(Num o) {
-            return Integer.compare(this.value, o.value);
-        }
-    }
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-        Num[] arr = new Num[N];
+
+        int[] values = new int[N];
+        Integer[] idxArr = new Integer[N]; // 반드시 Integer 배열이어야 Comparator 사용 가능
+
+        // 입력받으면서 idxArr도 같이 초기화
         for (int i = 0; i < N; i++) {
-            arr[i] = new Num(Integer.parseInt(br.readLine()), i);
+            values[i] = Integer.parseInt(br.readLine());
+            idxArr[i] = i;
         }
-        Arrays.sort(arr);
+
+        // 값 기준으로 인덱스 배열 정렬 (Comparator 필수!)
+        Arrays.sort(idxArr, Comparator.comparingInt(i -> values[i]));
 
         int maxMove = 0;
-        for (int i = 0; i < N; i++) {
-            // arr[i].idx: 원래 위치, i: 정렬된 위치
-            // 원래 위치에서 정렬된 위치로 올 때 앞으로 얼마나 왔는지
-            if (arr[i].idx - i > maxMove) {
-                maxMove = arr[i].idx - i;
-            }
+        for (int sortedIdx = 0; sortedIdx < N; sortedIdx++) {
+            int before = idxArr[sortedIdx]; // 원래 위치
+            int move = before - sortedIdx;  // 앞으로 이동한 칸 수
+            if (move > maxMove) maxMove = move;
         }
+
         System.out.println(maxMove + 1);
     }
 }

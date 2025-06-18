@@ -7,7 +7,7 @@ public class Main {
         int N = Integer.parseInt(br.readLine());
 
         int[] values = new int[N];
-        Integer[] idxArr = new Integer[N]; // 반드시 Integer 배열이어야 Comparator 사용 가능
+        Integer[] idxArr = new Integer[N]; // Integer 배열이어야 Comparator 사용 가능
 
         // 입력받으면서 idxArr도 같이 초기화
         for (int i = 0; i < N; i++) {
@@ -15,7 +15,7 @@ public class Main {
             idxArr[i] = i;
         }
 
-        // 값 기준으로 인덱스 배열 정렬 (Comparator 필수!)
+        // 값 기준으로 인덱스 배열 정렬
         Arrays.sort(idxArr, Comparator.comparingInt(i -> values[i]));
 
         int maxMove = 0;
